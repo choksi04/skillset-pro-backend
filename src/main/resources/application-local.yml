@@ -1,0 +1,6 @@
+# Only for isolated development; documentation endpoints still require authentication.
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
