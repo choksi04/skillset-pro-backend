@@ -8,7 +8,7 @@ Follow the team's java-spring-enterprise-standards skill for Java 17 / Spring Bo
 - Application responses use GenericResponse<T>; Actuator/OpenAPI keep their standard formats.
 - Entra API tokens require issuer, audience and timestamp validation. Scopes are not
   application roles; user/tenant/permission mapping is the next identity milestone.
-- Flyway owns schema changes; Hibernate validates. Do not apply source SQL automatically.
+- Liquibase owns schema changes; Hibernate validates. Do not apply source SQL automatically.
 - Add Auditable/JPA auditing after schema and identity mapping are validated; preserve
   historical audit fields during import.
 - Services need JUnit/Mockito tests; controllers need MVC tests including denied access
@@ -21,4 +21,4 @@ Follow the team's java-spring-enterprise-standards skill for Java 17 / Spring Bo
 - Do not copy Keycloak, SQL Server, API-key or workflow-engine examples into this app.
 
 Foundation tests mock decoding and disable persistence auto-configuration. Real Entra
-token validation and PostgreSQL/Flyway integration remain required before business go-live.
+token validation and PostgreSQL/Liquibase integration remain required before business go-live.

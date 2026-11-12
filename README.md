@@ -10,7 +10,7 @@ Spring Boot foundation initialized. Business APIs, application-user mapping, and
 
 - Validate Microsoft Entra ID API access tokens and enforce server-side authorization.
 - Provide REST APIs for users, domains, skills, questions, assessments, reviews, registries, and reporting.
-- Manage the target PostgreSQL schema through Flyway migrations.
+- Manage the target PostgreSQL schema through Liquibase migrations.
 - Provide repeatable tooling to import and reconcile approved existing data.
 - Integrate with an approved AI provider for question generation and assessment evaluation.
 
@@ -61,8 +61,8 @@ Local OpenAPI endpoints are enabled but still require a bearer token; they are d
 in the base configuration. All other requests require authentication. Fine-grained role,
 user status and tenant checks will be added with the first business workflow.
 
-Flyway is enabled, clean is disabled, and Hibernate uses `ddl-auto: validate`. No schema
-migration files are included until the live schema and source-to-target mapping are
+Liquibase is enabled with drop-first/checksum clearing disabled; Hibernate uses `ddl-auto: validate`. No schema
+changesets are included yet; the master changelog is empty until the live schema and source-to-target mapping are
 reviewed. Startup requires a reachable development database and valid Entra settings.
 
 ## Next milestone
@@ -71,3 +71,27 @@ Validate the live source schema and identity crosswalk, then implement the appli
 user lookup and first authenticated API. Preserve existing IDs and audit history in the
 migration design. Add business services as interface/implementation pairs and test
 permissions and PostgreSQL queries as those features are introduced.
+
+## Source validation and schema tracking
+
+Follow [Step 2: live database validation](docs/LIVE_DATABASE_VALIDATION.md) before adding
+the initial Liquibase schema. The master is at
+`src/main/resources/db/changelog/db.changelog-master.yaml`.
+Do not run this backend or Liquibase updates against the existing Supabase source.
+Historical business-data transfer remains a separately controlled process.
+
+The [local schema comparison](docs/SCHEMA_COMPARISON.md) consolidates both migration
+histories and lists findings to resolve during live validation. It does not populate
+the Liquibase baseline or certify the deployed schema.
+
+## Migration planning documents
+
+- [Migration owner's guide](docs/migration/SKILLSET_PRO_MIGRATION_PLAN.md)
+- [Technical requirements](docs/migration/SKILLSET_PRO_TECHNICAL_REQUIREMENTS.md)
+- [Migration with existing data](docs/migration/DATABASE_MIGRATION_WITH_DATA.md)
+- [Alternative: start without data](docs/migration/DATABASE_MIGRATION_WITHOUT_DATA.md)
+- [Current step: live database validation](docs/LIVE_DATABASE_VALIDATION.md)
+- [Local schema comparison](docs/SCHEMA_COMPARISON.md)
+
+Review the [target-schema decision draft](docs/TARGET_SCHEMA_DECISIONS.md) for observed
+live metadata, proposed target choices, assigned owner roles and approval gates.

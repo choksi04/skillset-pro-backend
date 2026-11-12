@@ -16,10 +16,12 @@ spring:
       hibernate:
         jdbc:
           time_zone: UTC
-  flyway:
+  liquibase:
     enabled: true
-    clean-disabled: true
-    baseline-on-migrate: false
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    drop-first: false
+    clear-checksums: false
+    analytics-enabled: false
   security:
     oauth2:
       resourceserver:
