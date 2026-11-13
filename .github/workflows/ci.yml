@@ -17,7 +17,7 @@ jobs:
       - name: Require Docker for PostgreSQL integration tests
         run: docker info
       - name: Verify formatting, tests, coverage, and packaging
-        run: bash mvnw --batch-mode --no-transfer-progress verify
+        run: bash ./mvnw --batch-mode --no-transfer-progress verify
       - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v4

@@ -74,7 +74,7 @@ docker info
 .\mvnw.cmd --batch-mode --no-transfer-progress verify
 ~~~
 
-On Linux/macOS: bash mvnw --batch-mode --no-transfer-progress verify.
+On Linux/macOS: bash ./mvnw --batch-mode --no-transfer-progress verify.
 
 Verification checks formatting, runs tests, enforces at least 80% line coverage and packages
 the application. Expected current result: 38 tests, zero failures, zero errors, zero skipped.
