@@ -1,0 +1,35 @@
+; Application-only selection for skillset-pro_261112.backup
+; SHA256 80412501C7B34BD272CFF49D2CFCF4CD2CC36492CAA08BEF7C1B14E3C4CD0A1D
+; For isolated rehearsal only; not a production or Liquibase deployment.
+; Preserve archive order. Source grants, policies and managed objects are excluded.
+4767; 0 17561 TABLE DATA public ai_evaluations postgres
+4793; 0 46244 TABLE DATA public assessment_assignments postgres
+4765; 0 17530 TABLE DATA public assessment_attempts postgres
+4787; 0 41309 TABLE DATA public assessment_config postgres
+4764; 0 17517 TABLE DATA public assessment_questions postgres
+4792; 0 46218 TABLE DATA public assessment_template_questions postgres
+4791; 0 46204 TABLE DATA public assessment_template_skills postgres
+4790; 0 46180 TABLE DATA public assessment_templates postgres
+4763; 0 17504 TABLE DATA public assessments postgres
+4766; 0 17546 TABLE DATA public attempt_answers postgres
+4768; 0 17578 TABLE DATA public attempt_skill_scores postgres
+4784; 0 31201 TABLE DATA public competency_levels postgres
+4773; 0 17652 TABLE DATA public domain_skill_mappings postgres
+4769; 0 17609 TABLE DATA public domains postgres
+4776; 0 17690 TABLE DATA public employee_domain_assignments postgres
+4777; 0 17701 TABLE DATA public manager_reviews postgres
+4780; 0 17740 TABLE DATA public notifications postgres
+4779; 0 17731 TABLE DATA public official_skill_entries postgres
+4772; 0 17640 TABLE DATA public questions postgres
+4785; 0 31219 TABLE DATA public reassessment_requests postgres
+4795; 0 46501 TABLE DATA public registry_review_items postgres
+4794; 0 46485 TABLE DATA public registry_reviews postgres
+4778; 0 17714 TABLE DATA public review_skill_entries postgres
+4770; 0 17620 TABLE DATA public skill_categories postgres
+4788; 0 42743 TABLE DATA public skill_registries postgres
+4789; 0 42755 TABLE DATA public skill_registry_items postgres
+4774; 0 17663 TABLE DATA public skill_registry_submissions postgres
+4775; 0 17675 TABLE DATA public skill_self_ratings postgres
+4786; 0 31243 TABLE DATA public skill_topics postgres
+4771; 0 17628 TABLE DATA public skills postgres
+4781; 0 18905 TABLE DATA public users postgres

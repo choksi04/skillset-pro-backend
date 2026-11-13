@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.*;
 class FoundationTest {
   @Autowired private MockMvc mvc;
   @MockitoBean private JwtDecoder jwtDecoder;
+  @MockitoBean private com.skillsetpro.repositories.SkillRepository skillRepository;
 
   @Test
   void healthIsPublic() throws Exception {

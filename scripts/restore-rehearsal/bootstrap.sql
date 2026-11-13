@@ -1,0 +1,8 @@
+-- ISOLATED REHEARSAL DATABASE ONLY. Run as its dedicated owner.
+\set ON_ERROR_STOP on
+BEGIN;
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+REVOKE CREATE ON SCHEMA public FROM PUBLIC;
+-- Restore with this same owner so application routines do not get public EXECUTE.
+ALTER DEFAULT PRIVILEGES REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;
+COMMIT;

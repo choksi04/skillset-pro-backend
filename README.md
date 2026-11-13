@@ -1,97 +1,157 @@
 # Skillset Pro Backend
 
-Backend repository for the Skillset Pro migration from Supabase to a Spring Boot API backed by self-hosted PostgreSQL.
+Updated 2026-11-13. Start here for the current setup.
+The project is migrating the existing React/Vite application and its data from Supabase
+to a Spring Boot API and self-hosted PostgreSQL. Authentication integration remains deferred.
 
-## Status
+## Documentation
 
-Spring Boot foundation initialized. Business APIs, application-user mapping, and source-data migration are not implemented yet.
+Only these three Markdown files are maintained in this backend repository:
 
-## Planned responsibilities
+| Document | Purpose |
+| --- | --- |
+| [README.md](README.md) | Current status, repository structure, configuration, build and startup |
+| [Migration and recovery](docs/MIGRATION.md) | Confirmed database checkpoint, scope, runbook, evidence, decisions and production gates |
+| [Backend development](docs/BACKEND_DEVELOPMENT.md) | API contract, authorization boundary, coding standards, tests and next implementation steps |
 
-- Validate Microsoft Entra ID API access tokens and enforce server-side authorization.
-- Provide REST APIs for users, domains, skills, questions, assessments, reviews, registries, and reporting.
-- Manage the target PostgreSQL schema through Liquibase migrations.
-- Provide repeatable tooling to import and reconcile approved existing data.
-- Integrate with an approved AI provider for question generation and assessment evaluation.
+Earlier overlapping plans have been consolidated. Executable SQL/PowerShell, CSV inventories,
+archive-selection manifests and Liquibase definitions remain in their existing folders.
+Original planning prose is archived outside Git; it is historical context, not current instructions.
 
-## Related repository
+## Current status
 
-[Skillset Pro Frontend](https://github.com/choksi04/skillset-pro-frontend)
+| Area | Status |
+| --- | --- |
+| Backend foundation | Spring Boot, resource-server security, validation, error envelope, health, OpenAPI and CI implemented |
+| Database baseline | Five development Liquibase changesets applied; 31 application tables |
+| Historical data | 96,106 records imported and verified against rehearsal using all-column table fingerprints |
+| Recovery | Development backup restored into a third database; all 31 counts/fingerprints matched |
+| Skills read API | List, count and detail implemented with tenant and soft-delete filtering |
+| Latest verification | 38 tests passed, zero failures/errors/skipped; 98.18% line coverage |
+| Identity integration | Deferred; no completed Entra-to-application-user/role mapping |
+| Frontend integration | New Java API has not replaced the frontend Supabase calls yet |
+| Production readiness | Pending business, security, infrastructure, identity and cutover acceptance |
 
-## Configuration
+Database migration results are based on the user's terminal evidence.
+The latest Maven verification was run directly on 2026-11-13 using a disposable PostgreSQL
+18 container. Local checks compiled for Java 17 while running on JDK 24.0.2;
+the Java 17 CI result must also pass before merge.
 
-Keep credentials, database exports, and employee data out of this repository. See `.env.example` for configuration names and `docs/BACKEND_STANDARDS.md` for implementation conventions.
+## Repositories and structure
+
+- Backend: [skillset-pro-backend](https://github.com/choksi04/skillset-pro-backend)
+- Frontend: [skillset-pro-frontend](https://github.com/choksi04/skillset-pro-frontend)
+- Original reference checkout: skillset-pro-main; keep its existing application code unchanged.
+
+Run backend commands from the backend repository, not the original reference checkout.
+
+| Path | Contents |
+| --- | --- |
+| src/main/java/com/skillsetpro | Controllers, service interfaces/implementations, repositories, entities/DTOs, security and configuration |
+| src/main/resources | Application YAML and Liquibase changelogs |
+| src/test | Foundation, API, security, service, changelog and PostgreSQL integration tests |
+| scripts/source-validation | Read-only source schema inventory |
+| scripts/restore-rehearsal | Reviewed archive selection, bootstrap and rehearsal validation |
+| scripts/liquibase | Development-only schema runner |
+| scripts/schema-comparison | Read-only schema snapshots/comparison |
+| scripts/data-import | Controlled import order, guards, transaction finalizer and validation |
+| scripts/data-validation | Table fingerprints, comparison and checkpoint backup |
+| docs/schema-reference | Non-row CSV column/source-migration/live-metadata inventories |
+| .github/workflows/ci.yml | Java 17 verification and report artifacts |
+
 ## Toolchain and verification
 
-- Java 17 target; CI uses Temurin 17. Use a JDK 17 installation for the team baseline.
-- Spring Boot 3.5.16 and Maven 3.9.16 (downloaded by the included Maven Wrapper).
-- Local verification may run on a newer compatible JDK while compiling with release 17;
-  this does not replace the Java 17 CI run.
+- Java 17 is the team/CI baseline; Spring Boot 3.5.16.
+- Maven Wrapper downloads Maven 3.9.16.
+- PostgreSQL 18.4 is the reported local migration server; integration tests use a disposable PostgreSQL 18 container.
+- Docker Desktop must be running with Linux containers for complete integration verification.
+- PostgreSQL client executables are expected under C:\Program Files\PostgreSQL\18\bin by migration helpers.
 
-From this folder in PowerShell:
+From the backend folder in PowerShell:
 
-```powershell
+~~~powershell
+docker info
 .\mvnw.cmd --batch-mode --no-transfer-progress verify
-```
+~~~
 
-Verification checks Java formatting, runs foundation tests, enforces 80% line coverage,
-and packages the application. It does not require PostgreSQL or an Entra connection.
-On Linux/macOS use `bash mvnw verify`. To apply Java formatting: `.\mvnw.cmd spotless:apply`.
-Reports are under `target/surefire-reports` and `target/site/jacoco`.
+On Linux/macOS: bash mvnw --batch-mode --no-transfer-progress verify.
 
-## Local application startup
+Verification checks formatting, runs tests, enforces at least 80% line coverage and packages
+the application. Expected current result: 38 tests, zero failures, zero errors, zero skipped.
+Without Docker, the two PostgreSQL tests are skipped; a successful build with skips is not
+complete database verification. CI checks Docker availability before running verify.
 
-Do not point this application at the existing production database. First provision an
-isolated development PostgreSQL database and approve an Entra backend API registration.
+The PostgreSQL tests apply the real development Liquibase baseline in a disposable container
+and use synthetic fixtures. They do not target rehearsal, development or recovery databases.
+Foundation/MVC tests mock JWT decoding and do not prove real Entra integration.
 
-Set `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `ENTRA_ISSUER_URI`, and `ENTRA_AUDIENCE`
-as process environment variables or in your IDE. A shell-style `.env` is not loaded
-implicitly. The issuer must identify the approved Entra tenant and token version; the
-audience must match the backend API access token, not an ID token. Optionally set
-`CORS_ALLOWED_ORIGINS` to a comma-separated list (for example, `http://localhost:8080`).
+Surefire starts the test JVM in UTC while preserving the JaCoCo agent. This fixes the observed
+PostgreSQL connection rejection of the host Asia/Calcutta timezone alias; it does not change
+the operating-system timezone or application runtime configuration.
 
-Then run:
+Reports: target/surefire-reports and target/site/jacoco.
+Apply Java formatting when needed:
 
-```powershell
+~~~powershell
+.\mvnw.cmd spotless:apply
+~~~
+
+## Configuration and startup
+
+The application is not yet verified end-to-end with real user tokens.
+Continue API implementation/tests while identity integration is deferred.
+
+Set configuration through process environment variables, IDE settings or an approved secret
+manager. A shell-style .env file is not loaded automatically. [.env.example](.env.example)
+contains placeholders; its sample database name is illustrative. For this project's migrated
+local development database use the actual name below.
+
+| Variable | Current meaning |
+| --- | --- |
+| DB_URL | jdbc:postgresql://127.0.0.1:5432/skillset_pro_backend_dev for isolated local development only |
+| DB_USERNAME | Approved local credential; skillset_dev_owner is the current migration owner, not a finalized production runtime role |
+| DB_PASSWORD | Supplied securely; never place real credentials in Markdown or command history |
+| ENTRA_ISSUER_URI | Approved tenant/token-version issuer; final integration pending |
+| ENTRA_AUDIENCE | Backend API access-token audience; final registration pending |
+| CORS_ALLOWED_ORIGINS | Configured frontend origins, for example http://localhost:8080 |
+| SERVER_PORT | Optional; defaults to 8081 |
+
+After provisioning valid settings, the existing local startup command is:
+
+~~~powershell
 .\mvnw.cmd spring-boot:run '-Dspring-boot.run.profiles=local'
-```
+~~~
 
-Default backend port: 8081. `/actuator/health` is public and hides internal details.
-Local OpenAPI endpoints are enabled but still require a bearer token; they are disabled
-in the base configuration. All other requests require authentication. Fine-grained role,
-user status and tenant checks will be added with the first business workflow.
+Only /actuator/health and its health subpaths are public; internal health details are hidden.
+Local OpenAPI/Swagger endpoints are enabled but authenticated; base configuration disables them.
+Business endpoints always require authentication. There is no local authentication bypass.
 
-Liquibase is enabled with drop-first/checksum clearing disabled; Hibernate uses `ddl-auto: validate`. No schema
-changesets are included yet; the master changelog is empty until the live schema and source-to-target mapping are
-reviewed. Startup requires a reachable development database and valid Entra settings.
+Hibernate uses ddl-auto=validate. Liquibase is enabled with drop-first and checksum clearing
+disabled. The default application changelog is deliberately empty. The five applied baseline
+changesets belong to the separate development changelog and liquibase-dev profile.
+Starting the application does not automatically select that development changelog.
+Do not edit already-applied changesets or silently wire a migration runner into startup.
+See [schema lifecycle](docs/MIGRATION.md#liquibase-schema-lifecycle).
 
-## Next milestone
+RLS remains enabled with no copied source policies. The current owner-based migration tests
+do not establish access for a future ordinary runtime role. Runtime grants/RLS and user/status/
+role mapping must be designed before deployment.
 
-Validate the live source schema and identity crosswalk, then implement the application
-user lookup and first authenticated API. Preserve existing IDs and audit history in the
-migration design. Add business services as interface/implementation pairs and test
-permissions and PostgreSQL queries as those features are introduced.
+## Next action and Git checkpoint
 
-## Source validation and schema tracking
+The next implementation slice is skill-category reads, followed by skill-topic reads.
+See the [development sequence](docs/BACKEND_DEVELOPMENT.md#next-development-sequence).
+Do not rerun completed data imports or restore over validated databases as part of API work.
 
-Follow [Step 2: live database validation](docs/LIVE_DATABASE_VALIDATION.md) before adding
-the initial Liquibase schema. The master is at
-`src/main/resources/db/changelog/db.changelog-master.yaml`.
-Do not run this backend or Liquibase updates against the existing Supabase source.
-Historical business-data transfer remains a separately controlled process.
+Before pushing, inspect the working tree and selected diff. Commit application code/tests,
+configuration, the three documents, scripts and approved metadata/manifests together.
+Keep generated SQL containing employee data, backups, fingerprints, checkpoint JSON, secrets
+and logs outside Git. Existing ignore rules are defense in depth; inspect staged paths.
 
-The [local schema comparison](docs/SCHEMA_COMPARISON.md) consolidates both migration
-histories and lists findings to resolve during live validation. It does not populate
-the Liquibase baseline or certify the deployed schema.
+~~~powershell
+git status --short
+git diff --stat
+git diff --cached --stat
+~~~
 
-## Migration planning documents
-
-- [Migration owner's guide](docs/migration/SKILLSET_PRO_MIGRATION_PLAN.md)
-- [Technical requirements](docs/migration/SKILLSET_PRO_TECHNICAL_REQUIREMENTS.md)
-- [Migration with existing data](docs/migration/DATABASE_MIGRATION_WITH_DATA.md)
-- [Alternative: start without data](docs/migration/DATABASE_MIGRATION_WITHOUT_DATA.md)
-- [Current step: live database validation](docs/LIVE_DATABASE_VALIDATION.md)
-- [Local schema comparison](docs/SCHEMA_COMPARISON.md)
-
-Review the [target-schema decision draft](docs/TARGET_SCHEMA_DECISIONS.md) for observed
-live metadata, proposed target choices, assigned owner roles and approval gates.
+Documentation consolidation does not perform a commit, push, database change or source checkout edit.

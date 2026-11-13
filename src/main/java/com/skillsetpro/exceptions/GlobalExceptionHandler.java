@@ -29,7 +29,12 @@ public class GlobalExceptionHandler {
         .body(GenericResponse.failure(exception.getMessage()));
   }
 
-  @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
+  @ExceptionHandler({
+    MethodArgumentNotValidException.class,
+    HttpMessageNotReadableException.class,
+    org.springframework.web.method.annotation.HandlerMethodValidationException.class,
+    org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class
+  })
   ResponseEntity<GenericResponse<Void>> invalidRequest(Exception exception) {
     return ResponseEntity.badRequest().body(GenericResponse.failure("Invalid request"));
   }

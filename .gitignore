@@ -7,3 +7,20 @@ target/
 .vscode/
 *.iml
 .DS_Store
+
+# Sensitive database archives and local rehearsal output
+*.backup
+*.dump
+backups/
+.restore-work/
+review-schema.sql
+.pgpass
+
+# Generated employee-data import artifacts (store outside Git)
+application-data.sql
+import-package.json
+
+# Local content-verification and recovery evidence
+fingerprints-*.json
+fingerprint-comparison.json
+migration-checkpoint.json

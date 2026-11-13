@@ -14,6 +14,8 @@ jobs:
           distribution: temurin
           java-version: '17'
           cache: maven
+      - name: Require Docker for PostgreSQL integration tests
+        run: docker info
       - name: Verify formatting, tests, coverage, and packaging
         run: bash mvnw --batch-mode --no-transfer-progress verify
       - name: Upload reports

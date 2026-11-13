@@ -1,0 +1,50 @@
+{
+  "status": "prepared-not-restored",
+  "inspectedOn": "2026-11-12",
+  "archiveFile": "skillset-pro_261112.backup",
+  "archiveSizeBytes": 8751394,
+  "sha256": "80412501C7B34BD272CFF49D2CFCF4CD2CC36492CAA08BEF7C1B14E3C4CD0A1D",
+  "archiveFormat": "PostgreSQL custom, zstd, dump version 1.16",
+  "sourcePostgres": "17.6",
+  "dumpTool": "18.6",
+  "inspectionTool": "pg_restore 18.4",
+  "selection": {
+    "combinedEntries": 190,
+    "schemaEntries": 159,
+    "dataEntries": 31,
+    "tables": 31,
+    "functions": 3,
+    "constraints": 42,
+    "foreignKeys": 12,
+    "indexes": 35,
+    "triggers": 5,
+    "rowSecurity": 31
+  },
+  "excluded": [
+    "all 31 source allow-all policies",
+    "auth, storage, vault, realtime, supabase_migrations, drizzle and other non-public schema objects/data",
+    "all extension entries (pg_trgm provisioned explicitly on isolated target)",
+    "source ownership and privileges",
+    "event triggers, publications, subscriptions and global objects",
+    "comments, security labels and tablespace assignments"
+  ],
+  "dependencies": {
+    "plpgsql": "required for application trigger functions; verify available",
+    "pg_trgm": "required in public for the selected GIN index",
+    "uuid": "gen_random_uuid() is used; inspect target support",
+    "otherManagedSchemaReferences": "none detected in extracted public DDL; dependency and restore execution still unverified"
+  },
+  "limitations": [
+    "TOC presence does not establish row counts or record completeness",
+    "metadata-only dependency scan is not a restore test",
+    "target PostgreSQL version must be tested because dump writer major is 18 and source server major is 17",
+    "authentication integration deferred; public.users records still selected"
+  ],
+  "dataVerification": {
+    "method": "streamed public COPY sections without saving or displaying row values",
+    "applicationTables": 31,
+    "totalApplicationRows": 96106,
+    "countsFile": "expected-row-counts.csv",
+    "limitations": "Counts describe this archive only, not source changes after export or field-level correctness"
+  }
+}

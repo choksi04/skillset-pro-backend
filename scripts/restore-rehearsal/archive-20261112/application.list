@@ -1,0 +1,194 @@
+; Application-only selection for skillset-pro_261112.backup
+; SHA256 80412501C7B34BD272CFF49D2CFCF4CD2CC36492CAA08BEF7C1B14E3C4CD0A1D
+; For isolated rehearsal only; not a production or Liquibase deployment.
+; Preserve archive order. Source grants, policies and managed objects are excluded.
+382; 1255 59400 FUNCTION public block_archived_employee_writes() postgres
+423; 1255 42772 FUNCTION public enforce_single_draft_registry() postgres
+396; 1255 41604 FUNCTION public get_question_counts() postgres
+278; 1259 17561 TABLE public ai_evaluations postgres
+304; 1259 46244 TABLE public assessment_assignments postgres
+276; 1259 17530 TABLE public assessment_attempts postgres
+298; 1259 41309 TABLE public assessment_config postgres
+275; 1259 17517 TABLE public assessment_questions postgres
+303; 1259 46218 TABLE public assessment_template_questions postgres
+302; 1259 46204 TABLE public assessment_template_skills postgres
+301; 1259 46180 TABLE public assessment_templates postgres
+274; 1259 17504 TABLE public assessments postgres
+277; 1259 17546 TABLE public attempt_answers postgres
+279; 1259 17578 TABLE public attempt_skill_scores postgres
+295; 1259 31201 TABLE public competency_levels postgres
+284; 1259 17652 TABLE public domain_skill_mappings postgres
+280; 1259 17609 TABLE public domains postgres
+287; 1259 17690 TABLE public employee_domain_assignments postgres
+288; 1259 17701 TABLE public manager_reviews postgres
+291; 1259 17740 TABLE public notifications postgres
+290; 1259 17731 TABLE public official_skill_entries postgres
+283; 1259 17640 TABLE public questions postgres
+296; 1259 31219 TABLE public reassessment_requests postgres
+306; 1259 46501 TABLE public registry_review_items postgres
+305; 1259 46485 TABLE public registry_reviews postgres
+289; 1259 17714 TABLE public review_skill_entries postgres
+281; 1259 17620 TABLE public skill_categories postgres
+299; 1259 42743 TABLE public skill_registries postgres
+300; 1259 42755 TABLE public skill_registry_items postgres
+285; 1259 17663 TABLE public skill_registry_submissions postgres
+286; 1259 17675 TABLE public skill_self_ratings postgres
+297; 1259 31243 TABLE public skill_topics postgres
+282; 1259 17628 TABLE public skills postgres
+292; 1259 18905 TABLE public users postgres
+4767; 0 17561 TABLE DATA public ai_evaluations postgres
+4793; 0 46244 TABLE DATA public assessment_assignments postgres
+4765; 0 17530 TABLE DATA public assessment_attempts postgres
+4787; 0 41309 TABLE DATA public assessment_config postgres
+4764; 0 17517 TABLE DATA public assessment_questions postgres
+4792; 0 46218 TABLE DATA public assessment_template_questions postgres
+4791; 0 46204 TABLE DATA public assessment_template_skills postgres
+4790; 0 46180 TABLE DATA public assessment_templates postgres
+4763; 0 17504 TABLE DATA public assessments postgres
+4766; 0 17546 TABLE DATA public attempt_answers postgres
+4768; 0 17578 TABLE DATA public attempt_skill_scores postgres
+4784; 0 31201 TABLE DATA public competency_levels postgres
+4773; 0 17652 TABLE DATA public domain_skill_mappings postgres
+4769; 0 17609 TABLE DATA public domains postgres
+4776; 0 17690 TABLE DATA public employee_domain_assignments postgres
+4777; 0 17701 TABLE DATA public manager_reviews postgres
+4780; 0 17740 TABLE DATA public notifications postgres
+4779; 0 17731 TABLE DATA public official_skill_entries postgres
+4772; 0 17640 TABLE DATA public questions postgres
+4785; 0 31219 TABLE DATA public reassessment_requests postgres
+4795; 0 46501 TABLE DATA public registry_review_items postgres
+4794; 0 46485 TABLE DATA public registry_reviews postgres
+4778; 0 17714 TABLE DATA public review_skill_entries postgres
+4770; 0 17620 TABLE DATA public skill_categories postgres
+4788; 0 42743 TABLE DATA public skill_registries postgres
+4789; 0 42755 TABLE DATA public skill_registry_items postgres
+4774; 0 17663 TABLE DATA public skill_registry_submissions postgres
+4775; 0 17675 TABLE DATA public skill_self_ratings postgres
+4786; 0 31243 TABLE DATA public skill_topics postgres
+4771; 0 17628 TABLE DATA public skills postgres
+4781; 0 18905 TABLE DATA public users postgres
+4290; 2606 17572 CONSTRAINT public ai_evaluations ai_evaluations_pkey postgres
+4383; 2606 46257 CONSTRAINT public assessment_assignments assessment_assignments_pkey postgres
+4281; 2606 17540 CONSTRAINT public assessment_attempts assessment_attempts_pkey postgres
+4363; 2606 41321 CONSTRAINT public assessment_config assessment_config_pkey postgres
+4365; 2606 41323 CONSTRAINT public assessment_config assessment_config_tenant_id_config_type_reference_id_questi_key postgres
+4277; 2606 17524 CONSTRAINT public assessment_questions assessment_questions_pkey postgres
+4380; 2606 46227 CONSTRAINT public assessment_template_questions assessment_template_questions_pkey postgres
+4377; 2606 46212 CONSTRAINT public assessment_template_skills assessment_template_skills_pkey postgres
+4375; 2606 46203 CONSTRAINT public assessment_templates assessment_templates_pkey postgres
+4272; 2606 17516 CONSTRAINT public assessments assessments_pkey postgres
+4287; 2606 17555 CONSTRAINT public attempt_answers attempt_answers_pkey postgres
+4293; 2606 17588 CONSTRAINT public attempt_skill_scores attempt_skill_scores_pkey postgres
+4310; 2606 17660 CONSTRAINT public domain_skill_mappings domain_skill_mappings_pkey postgres
+4296; 2606 17619 CONSTRAINT public domains domains_pkey postgres
+4323; 2606 17700 CONSTRAINT public employee_domain_assignments employee_domain_assignments_employee_id_domain_id_key postgres
+4325; 2606 17698 CONSTRAINT public employee_domain_assignments employee_domain_assignments_pkey postgres
+4327; 2606 17713 CONSTRAINT public manager_reviews manager_reviews_assessment_id_key postgres
+4329; 2606 17711 CONSTRAINT public manager_reviews manager_reviews_pkey postgres
+4340; 2606 17748 CONSTRAINT public notifications notifications_pkey postgres
+4336; 2606 17739 CONSTRAINT public official_skill_entries official_skill_entries_pkey postgres
+4355; 2606 31216 CONSTRAINT public competency_levels question_settings_pkey postgres
+4357; 2606 31218 CONSTRAINT public competency_levels question_settings_tenant_id_level_key postgres
+4307; 2606 17651 CONSTRAINT public questions questions_pkey postgres
+4359; 2606 31230 CONSTRAINT public reassessment_requests reassessment_requests_pkey postgres
+4395; 2606 46510 CONSTRAINT public registry_review_items registry_review_items_pkey postgres
+4397; 2606 46512 CONSTRAINT public registry_review_items registry_review_items_review_id_skill_id_key postgres
+4390; 2606 46495 CONSTRAINT public registry_reviews registry_reviews_pkey postgres
+4392; 2606 46497 CONSTRAINT public registry_reviews registry_reviews_registry_id_key postgres
+4332; 2606 17723 CONSTRAINT public review_skill_entries review_skill_entries_pkey postgres
+4334; 2606 17725 CONSTRAINT public review_skill_entries review_skill_entries_review_id_skill_id_key postgres
+4298; 2606 17627 CONSTRAINT public skill_categories skill_categories_pkey postgres
+4368; 2606 42754 CONSTRAINT public skill_registries skill_registries_employee_version_unique postgres
+4370; 2606 42752 CONSTRAINT public skill_registries skill_registries_pkey postgres
+4373; 2606 42763 CONSTRAINT public skill_registry_items skill_registry_items_pkey postgres
+4314; 2606 17674 CONSTRAINT public skill_registry_submissions skill_registry_submissions_employee_id_cycle_key postgres
+4316; 2606 17672 CONSTRAINT public skill_registry_submissions skill_registry_submissions_pkey postgres
+4319; 2606 17682 CONSTRAINT public skill_self_ratings skill_self_ratings_pkey postgres
+4321; 2606 17684 CONSTRAINT public skill_self_ratings skill_self_ratings_submission_id_skill_id_key postgres
+4361; 2606 31254 CONSTRAINT public skill_topics skill_topics_pkey postgres
+4302; 2606 17639 CONSTRAINT public skills skills_pkey postgres
+4343; 2606 18921 CONSTRAINT public users users_email_key postgres
+4345; 2606 18919 CONSTRAINT public users users_pkey postgres
+4308; 1259 50819 INDEX public domain_skill_mappings_active_domain_skill_uidx postgres
+4291; 1259 17753 INDEX public idx_ai_evaluations_unique postgres
+4282; 1259 50487 INDEX public idx_assessment_attempts_assessment_started postgres
+4283; 1259 48197 INDEX public idx_assessment_attempts_employee_assessment postgres
+4284; 1259 48196 INDEX public idx_assessment_attempts_started_at postgres
+4278; 1259 17602 INDEX public idx_assessment_questions_assessment postgres
+4279; 1259 50485 INDEX public idx_assessment_questions_question postgres
+4273; 1259 17600 INDEX public idx_assessments_employee postgres
+4274; 1259 46272 INDEX public idx_assessments_is_adaptive postgres
+4275; 1259 17601 INDEX public idx_assessments_tenant postgres
+4384; 1259 46261 INDEX public idx_assignments_assessment postgres
+4385; 1259 46259 INDEX public idx_assignments_employee_template_active postgres
+4386; 1259 46260 INDEX public idx_assignments_template postgres
+4288; 1259 48194 INDEX public idx_attempt_answers_attempt postgres
+4294; 1259 17754 INDEX public idx_attempt_skill_scores_unique postgres
+4285; 1259 17604 INDEX public idx_attempts_employee postgres
+4311; 1259 48191 INDEX public idx_domain_skill_mappings_domain_active postgres
+4312; 1259 48192 INDEX public idx_domain_skill_mappings_skill_active postgres
+4337; 1259 48199 INDEX public idx_notifications_target_role_created postgres
+4338; 1259 48198 INDEX public idx_notifications_target_user_created postgres
+4303; 1259 48189 INDEX public idx_questions_created_at_active postgres
+4304; 1259 50401 INDEX public idx_questions_skill_type_status_level_active postgres
+4305; 1259 50483 INDEX public idx_questions_text_trgm postgres
+4393; 1259 46514 INDEX public idx_registry_review_items_review_id postgres
+4387; 1259 46499 INDEX public idx_registry_reviews_registry_id postgres
+4388; 1259 46500 INDEX public idx_registry_reviews_reviewer_id postgres
+4330; 1259 48200 INDEX public idx_review_skill_entries_review postgres
+4366; 1259 42771 INDEX public idx_skill_registries_employee_version postgres
+4371; 1259 48201 INDEX public idx_skill_registry_items_registry postgres
+4317; 1259 50486 INDEX public idx_skill_self_ratings_skill postgres
+4299; 1259 47087 INDEX public idx_skills_category_id postgres
+4300; 1259 48190 INDEX public idx_skills_created_at_active postgres
+4381; 1259 46234 INDEX public idx_template_questions_template postgres
+4378; 1259 46233 INDEX public idx_template_skills_template postgres
+4341; 1259 50484 INDEX public idx_users_domain postgres
+4488; 2620 42773 TRIGGER public skill_registries enforce_single_draft_registry_trigger postgres
+4487; 2620 59403 TRIGGER public assessment_questions trg_archived_ro_assessment_questions postgres
+4486; 2620 59404 TRIGGER public assessments trg_archived_ro_assessments postgres
+4490; 2620 59402 TRIGGER public registry_review_items trg_archived_ro_registry_review_items postgres
+4489; 2620 59401 TRIGGER public registry_reviews trg_archived_ro_registry_reviews postgres
+4457; 2606 17573 FK CONSTRAINT public ai_evaluations ai_evaluations_attempt_id_fkey postgres
+4455; 2606 17541 FK CONSTRAINT public assessment_attempts assessment_attempts_assessment_id_fkey postgres
+4453; 2606 17525 FK CONSTRAINT public assessment_questions assessment_questions_assessment_id_fkey postgres
+4454; 2606 41589 FK CONSTRAINT public assessment_questions assessment_questions_target_level_fkey postgres
+4466; 2606 46228 FK CONSTRAINT public assessment_template_questions assessment_template_questions_template_id_fkey postgres
+4465; 2606 46213 FK CONSTRAINT public assessment_template_skills assessment_template_skills_template_id_fkey postgres
+4456; 2606 17556 FK CONSTRAINT public attempt_answers attempt_answers_attempt_id_fkey postgres
+4458; 2606 17589 FK CONSTRAINT public attempt_skill_scores attempt_skill_scores_attempt_id_fkey postgres
+4459; 2606 41584 FK CONSTRAINT public questions questions_competency_level_fkey postgres
+4461; 2606 17726 FK CONSTRAINT public review_skill_entries review_skill_entries_review_id_fkey postgres
+4464; 2606 42764 FK CONSTRAINT public skill_registry_items skill_registry_items_registry_id_fkey postgres
+4460; 2606 17685 FK CONSTRAINT public skill_self_ratings skill_self_ratings_submission_id_fkey postgres
+4668; 0 17561 ROW SECURITY public ai_evaluations postgres
+4692; 0 46244 ROW SECURITY public assessment_assignments postgres
+4666; 0 17530 ROW SECURITY public assessment_attempts postgres
+4686; 0 41309 ROW SECURITY public assessment_config postgres
+4665; 0 17517 ROW SECURITY public assessment_questions postgres
+4691; 0 46218 ROW SECURITY public assessment_template_questions postgres
+4690; 0 46204 ROW SECURITY public assessment_template_skills postgres
+4689; 0 46180 ROW SECURITY public assessment_templates postgres
+4664; 0 17504 ROW SECURITY public assessments postgres
+4667; 0 17546 ROW SECURITY public attempt_answers postgres
+4669; 0 17578 ROW SECURITY public attempt_skill_scores postgres
+4683; 0 31201 ROW SECURITY public competency_levels postgres
+4674; 0 17652 ROW SECURITY public domain_skill_mappings postgres
+4670; 0 17609 ROW SECURITY public domains postgres
+4677; 0 17690 ROW SECURITY public employee_domain_assignments postgres
+4678; 0 17701 ROW SECURITY public manager_reviews postgres
+4681; 0 17740 ROW SECURITY public notifications postgres
+4680; 0 17731 ROW SECURITY public official_skill_entries postgres
+4673; 0 17640 ROW SECURITY public questions postgres
+4684; 0 31219 ROW SECURITY public reassessment_requests postgres
+4694; 0 46501 ROW SECURITY public registry_review_items postgres
+4693; 0 46485 ROW SECURITY public registry_reviews postgres
+4679; 0 17714 ROW SECURITY public review_skill_entries postgres
+4671; 0 17620 ROW SECURITY public skill_categories postgres
+4687; 0 42743 ROW SECURITY public skill_registries postgres
+4688; 0 42755 ROW SECURITY public skill_registry_items postgres
+4675; 0 17663 ROW SECURITY public skill_registry_submissions postgres
+4676; 0 17675 ROW SECURITY public skill_self_ratings postgres
+4685; 0 31243 ROW SECURITY public skill_topics postgres
+4672; 0 17628 ROW SECURITY public skills postgres
+4682; 0 18905 ROW SECURITY public users postgres

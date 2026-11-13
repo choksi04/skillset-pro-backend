@@ -1,0 +1,60 @@
+# Development draft; not included in the default application changelog.
+# No automatic destructive rollback is supplied. Use a new isolated target for retry.
+databaseChangeLog:
+  - changeSet:
+      id: 001-01-trigram-extension
+      author: skillset-pro
+      dbms: postgresql
+      changes:
+        - sql:
+            sql: CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+  - changeSet:
+      id: 001-02-application-tables
+      author: skillset-pro
+      dbms: postgresql
+      changes:
+        - sqlFile:
+            path: 001-tables.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: false
+  - changeSet:
+      id: 001-03-application-routines
+      author: skillset-pro
+      dbms: postgresql
+      changes:
+        - sqlFile:
+            path: 001-block_archived_employee_writes.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+            stripComments: false
+        - sqlFile:
+            path: 001-enforce_single_draft_registry.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+            stripComments: false
+        - sqlFile:
+            path: 001-get_question_counts.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+            stripComments: false
+  - changeSet:
+      id: 001-04-constraints-indexes
+      author: skillset-pro
+      dbms: postgresql
+      changes:
+        - sqlFile:
+            path: 001-constraints-indexes.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: false
+  - changeSet:
+      id: 001-05-triggers-rls
+      author: skillset-pro
+      dbms: postgresql
+      changes:
+        - sqlFile:
+            path: 001-triggers-rls.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: false
